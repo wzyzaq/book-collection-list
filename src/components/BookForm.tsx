@@ -87,7 +87,7 @@ export const BookForm: React.FC<BookFormProps> = ({ user }) => {
 
     // 验证表单数据
     const { fields } = values || {}
-    const formData = fields ? (Array.isArray(fields) ? Object.fromEntries(fields.map((f: any) => [f.name, f.value])) : fields) : form.getFieldsValue()
+    const formData = fields ? (Array.isArray(fields) ? Object.fromEntries(fields.map((f: any) => [f.name, f.value])) : fields) : form.getFieldsValue(true)
     
     // 检查必要字段
     if (!formData.title?.trim()) {

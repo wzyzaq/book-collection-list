@@ -16,8 +16,17 @@ export const LoginButton: React.FC<LoginButtonProps> = ({ user, onUserChange }) 
       const email = prompt('请输入邮箱:') || 'admin@example.com'
       const password = prompt('请输入密码:') || 'admin123'
       
-      const { user: loggedInUser } = await auth.signIn(email, password)
-      onUserChange(loggedInUser)
+      const result = await auth.signIn(email, password)
+      // 由于 auth.signIn 返回的不是 Supabase 的 User 类型，我们需要创建兼容的用户对象
+      const compatibleUser = {
+        id: result.user.id,
+        email: result.user.email,
+        user_metadata: result.user.user_metadata,
+        app_metadata: {}, // 添加缺失的属性
+        aud: '', // 添加缺失的属性
+        created_at: '' // 添加缺失的属性
+      } as User;
+      onUserChange(compatibleUser)
     } catch (error) {
 
       alert('登录失败，请检查用户名和密码')

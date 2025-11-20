@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Card, Button, Space, Tag, Loading, Empty, Dialog, Form, Input, MessagePlugin, DialogPlugin, Divider } from 'tdesign-react'
+import { Card, Button, Space, Tag, Loading, Empty, Dialog, Form, Input, Textarea, MessagePlugin, DialogPlugin, Divider } from 'tdesign-react'
 import { Edit1Icon, DeleteIcon, AddIcon, ArrowLeftIcon } from 'tdesign-icons-react'
 import { BookWithNotes, ReadingNote } from '../types'
 import bookService from '../services/books'
@@ -14,7 +14,7 @@ const statusColors = {
   '未借阅': 'default',
   '正借阅': 'warning',
   '已借阅': 'success'
-}
+} as const;
 
 export const BookDetail: React.FC<BookDetailProps> = ({ user }) => {
   const { id } = useParams<{ id: string }>()
@@ -293,13 +293,12 @@ export const BookDetail: React.FC<BookDetailProps> = ({ user }) => {
         >
           <Form onSubmit={handleNoteSubmit}>
             <Form.FormItem name="content" label="心得内容">
-              <Input
+              <Textarea
                 value={noteContent}
                 onChange={setNoteContent}
                 placeholder="请分享你的读书心得..."
-                type="textarea"
                 autosize={{ minRows: 8, maxRows: 12 }}
-                maxLength={2000}
+                maxcharacter={2000}
               />
             </Form.FormItem>
           </Form>
